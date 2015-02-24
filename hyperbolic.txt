@@ -1,0 +1,17 @@
+"hyperbolic"
+{
+	"base"			"base"
+	"title"			"Hyperbolic World"
+	"version"		"1.0"
+	"menusystem"	"1"
+	
+	"author_name"	"Julien BUSSET"
+	"author_email"	""
+	"author_url"	"http://hyperbolicworld.wordpress.com/"
+	
+	"maps"			"^hp_"
+	
+	"icon"			""
+	"info"			""
+	"hide"			"0"
+}
