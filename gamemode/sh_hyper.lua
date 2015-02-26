@@ -25,7 +25,68 @@ function GM:Move(joueur,mvt)		-- ply pour le joueur concerné, sz pour la comman
 		local Vh_x = V_x * ratio;
 		local Vh_y = V_y * ratio;
 		
-		mvt:SetVelocity(Vector( Vh_x , Vh_y , vitesse.z ));
+		mvt:SetVelocity( Vector( Vh_x , Vh_y , vitesse.z ) );		-- modifie la vitesse du joueur
+		
+		joueur:SetModelScale(ratio,0);								-- modifie la taille du joueur
+
+--		joueur:SetFOV( 75 + 105 * (1 - ratio),0 );					-- change la FOV pour changer la caméra de taille (75 par défaut)
+-- Rajouter : un zoom de la caméra pour compenser le FOV qui agrandit le champ de vision.
+-- Ne fonctionne pas correctement :		
+		joueur:SetViewOffset( Vector(0,0,64 * ratio) );		-- change la position de la caméra pour la baisser (64 par défaut)
+		joueur:SetViewOffsetDucked( Vector(0,0,28 * ratio));
+		
+		joueur:SetStepSize(18 * ratio);
+
+-- pris sur un autre (merci à lui!) :
+		local HULL_MIN = Vector( -16, -16, 0  )
+		local HULL_MAX = Vector(  16,  16, 72 )
+
+		local HULL_DUCK_MIN = Vector( -16, -16, 0  )
+		local HULL_DUCK_MAX = Vector(  16,  16, 36 )
+
+	    if ( ratio == 1 ) then
+        joueur:ResetHull()
+	    else
+        joueur:SetHull( HULL_MIN, ratio * HULL_MAX )
+        joueur:SetHullDuck( HULL_DUCK_MIN, ratio * HULL_DUCK_MAX )
+    	end
+-- fin de ce qui a été pris sur un autre
+
+--[[ d'où j'ai pris ce qui précède :
+local VIEW_OFFSET = Vector( 0, 0, 64 )
+local VIEW_OFFSET_DUCK = Vector( 0, 0, 28 )
+
+local HULL_MIN = Vector( -16, -16, 0  )
+local HULL_MAX = Vector(  16,  16, 72 )
+
+local HULL_DUCK_MIN = Vector( -16, -16, 0  )
+local HULL_DUCK_MAX = Vector(  16,  16, 36 )
+
+local STEP_SIZE = 18
+
+local PLAYER = FindMetaTable( "Player" )
+
+function PLAYER:SetSize( size )
+    size = math.Clamp( size, 0.01, 20 ) -- if you don't clamp it at around 20, they will start lagging the server when they walk
+
+    self:SetModelScale( size, 0 )
+    self:SetViewOffset( size * VIEW_OFFSET )
+    self:SetViewOffsetDucked( size * VIEW_OFFSET_DUCK )
+    self:SetStepSize( size * STEP_SIZE )
+
+    if ( size == 1 ) then
+        self:ResetHull()
+    elseif ( size < 1 ) then
+        self:SetHull( HULL_MIN, size * HULL_MAX )
+        self:SetHullDuck( HULL_DUCK_MIN, size * HULL_DUCK_MAX )
+    else
+        self:SetHull( HULL_MIN, HULL_MAX )
+        self:SetHullDuck( HULL_DUCK_MIN, HULL_DUCK_MAX )
+    end
+end
+]]--
+		
+		print(joueur:GetCurrentViewOffset());
 
 	end
 	
