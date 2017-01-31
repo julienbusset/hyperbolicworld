@@ -10,7 +10,7 @@ AddCSLuaFile("resources.lua");
 AddCSLuaFile("cl_init.lua");
 AddCSLuaFile("shared.lua");
 
-AddCSLuaFile("sh_taille.lua");
+AddCSLuaFile("sh_hyper.lua");
 
 include("resources.lua");
 include("cl_init.lua");

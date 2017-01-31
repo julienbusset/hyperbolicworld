@@ -6,5 +6,5 @@ function GM:Initialize()
 	-- Do stuff, à compléter
 end
 
-include("sh_taille.lua") // defini la fonction taille
-print ("sh_taille.lua inclus");
+include("sh_hyper.lua");
+print ("sh_hyper.lua inclus");
